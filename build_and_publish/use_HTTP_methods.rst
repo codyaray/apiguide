@@ -32,7 +32,7 @@ Examples
    
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
 
       {...}
 
@@ -50,38 +50,39 @@ Examples
       Host: example.gov.au
       Accept: application/json, text/javascript
 
-      {...}
+      {"name": "FancyAUS", ...}
    
    A response of "201 Created" indicates that the request has been fulfilled.
 
-   The URI of the new resource is provided in the response
+   The URI of the new resource is provided in the Location header.
 
    .. sourcecode:: http
 
       HTTP/1.1 201 Created 
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
+      Location: https://example.gov.au/magazines/1234
      
-      { "id": "1234" }
+      { "id": "1234", "name": "FancyAUS", ...}
 
 
-   However, no effect if the resource already exists.
+   However, no effect if the resource already exists (according to whatever data you consider to be unique).
 
    .. sourcecode:: http
 
-      HTTP/1.1 405 Method Not Allowed
+      HTTP/1.1 409 Conflict
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
 
       {
-        "developerMessage" : "Unable to create a magazine with ID of 1234 because a magazine with that ID already exists",
-	"userMessage" : "Unable to create duplicate magazine 1234",
+        "developerMessage" : "Unable to create a magazine with name of FancyAUS because a magazine with that name already exists",
+	"userMessage" : "Unable to create duplicate magazine FancyAUS",
 	"errorCode" : "444444",
 	"moreInfo" : "http://api.example.gov/v1/documentation/errors/444444.html"
       }
    
    :statuscode 201: magazine created
-   :statuscode 405: unable to create "magazine" resource
+   :statuscode 409: unable to create "magazine" resource as it conflicts with existing resource
 
 
 .. http:put:: /magazines
@@ -102,7 +103,7 @@ Examples
 
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
       { "id": "1234" }
 
@@ -128,7 +129,7 @@ Examples
 
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
       { "id": "1234" }
 
@@ -151,7 +152,7 @@ Examples
 
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
       { "id": "1234" }
 
@@ -174,7 +175,7 @@ Examples
 
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
 
    :statuscode 200: magazine 1234 deleted
@@ -196,7 +197,7 @@ Examples
    
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
       {...}
    
@@ -218,7 +219,7 @@ Examples
    
       HTTP/1.1 200 OK
       Vary: Accept
-      Content-Type: text/javascript
+      Content-Type: application/json
      
       {...}
    
